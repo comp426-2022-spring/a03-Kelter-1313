@@ -101,11 +101,11 @@ app.get("/app/flips/:number/", (req,res) =>{
 })
 
 app.get("/app/flip/call/heads/", (req,res) =>{
-  res.status(200).json({"flips":flipAHead(req.params.number)})
+  res.status(200).json(flipAHead(req.params.number))
 })
 
 app.get("/app/flip/call/tails/", (req,res) =>{
-  res.status(200).json({"flips":flipATail(req.params.number)})
+  res.status(200).json(flipATail(req.params.number))
 })
 
 app.use(function(req,res) {
