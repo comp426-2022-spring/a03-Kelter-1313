@@ -24,6 +24,11 @@ var server = app.listen(port, () => {
 
 app.get("/app", (req, res) => {
   res.status(200).end("API Works")
+  res.type("text/plain")
+})
+
+app.get("/app/echo/:number", (res, req) => {
+  res.status(200).json({"message": req.params.number})
 })
 
 app.use(function(req,res) {
