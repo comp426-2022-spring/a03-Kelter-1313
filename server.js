@@ -18,8 +18,12 @@ const port = args.port || process.env.PORT || 3000
 // Use the documentation for the Node.js `fs` module. 
 // The function must read a file located at `./www/index.html` and do some stuff with it.
 // The stuff that should be inside this function is all below.
-server.listen(port, () => {
+var server = app.listen(port, () => {
   console.log(`App is running on port ${port}`)
+})
+
+app.get("/app", (req, res) => {
+  res.status(200).end("API Works")
 })
 
 app.use(function(req,res) {
