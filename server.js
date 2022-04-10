@@ -9,6 +9,17 @@ function coinFlip() {
   }
 }
 
+function flipACoin(call) {
+  var flipResult = coinFlip();
+  var returnDict = {"call": call, "flip": flipResult, "result": ""};
+  var resultOfCall = "lose";
+  if (call == flipResult){
+    resultOfCall = "win";
+  }
+  returnDict["result"] = resultOfCall;
+  return returnDict;
+}
+
 function coinFlips(flips=1) {
   var a = [];
   for (let x = 0; x < flips; x++) {
@@ -101,11 +112,11 @@ app.get("/app/flips/:number/", (req,res) =>{
 })
 
 app.get("/app/flip/call/heads/", (req,res) =>{
-  res.status(200).json(flipAHead(req.params.number))
+  res.status(200).json(flipACoin("heads"))
 })
 
 app.get("/app/flip/call/tails/", (req,res) =>{
-  res.status(200).json(flipATail(req.params.number))
+  res.status(200).json(flipACoin("tails"))
 })
 
 app.use(function(req,res) {
