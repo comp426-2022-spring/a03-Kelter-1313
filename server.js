@@ -1,3 +1,58 @@
+// Necessary Functions
+function coinFlip() {
+  var a = Math.floor(Math.random() * 10) + 1;
+  if (a <= 5){
+    return "heads";
+  }
+  else{
+    return "tails";
+  }
+}
+
+function coinFlips(flips=1) {
+  var a = [];
+  for (let x = 0; x < flips; x++) {
+    a.push(coinFlip());
+  }
+  return a;
+}
+
+function countFlips(array) {
+  var a = Array.from(array);
+  var counts = {"heads": 0, "tails": 0}
+  for (let x = 0; x < array.length; x++) {
+    if (a.pop() == "heads"){
+      counts["heads"]+=1;
+    }
+    else{
+      counts["tails"]+=1;
+    }
+  }
+  return counts;
+}
+
+function flipAHead(call) {
+  var flipResult = "heads";
+  var returnDict = {"call": call, "flip": flipResult, "result": ""};
+  var resultOfCall = "lose";
+  if (call == flipResult){
+    resultOfCall = "win";
+  }
+  returnDict["result"] = resultOfCall;
+  return returnDict;
+}
+
+function flipATail(call) {
+  var flipResult = "tails";
+  var returnDict = {"call": call, "flip": flipResult, "result": ""};
+  var resultOfCall = "lose";
+  if (call == flipResult){
+    resultOfCall = "win";
+  }
+  returnDict["result"] = resultOfCall;
+  return returnDict;
+}
+
 // Require http module
 const http = require('http')
 // Require fs module
@@ -27,8 +82,30 @@ app.get("/app", (req, res) => {
   res.type("text/plain")
 })
 
-app.get("/app/echo/:number", (res, req) => {
+app.get("/app/flip", (req,res) => {
+  res.status(200).json({"flip":coinFlip()})
+})
+
+/*Endpoint /app/flips/:number that returns JSON including an array of the raw random flips and a summary. Example below.
+Endpoint /app/flip/call/heads that returns the result of a random flip match against heads as JSON.
+Endpoint /app/flip/call/tails that returns the result of a random flip match against tails as JSON.
+*/
+
+app.get("/app/echo/:number", (req, res) => {
   res.status(200).json({"message": req.params.number})
+})
+
+app.get("/app/flips", (req,res) =>{
+  var a = coinFlips(req.params.number)
+  res.status(200).json({"raw":a, "summary":countFlips(a)})
+})
+
+app.get("/app/flip/call/heads", (req,res) =>{
+  res.status(200).json({"flips":flipAHead(req.params.number)})
+})
+
+app.get("/app/flip/call/tails", (req,res) =>{
+  res.status(200).json({"flips":flipATail(req.params.number)})
 })
 
 app.use(function(req,res) {

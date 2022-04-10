@@ -100,10 +100,30 @@ function flipACoin(call) {
   return returnDict;
 }
 
+function flipAHead(call) {
+  var flipResult = "heads";
+  var returnDict = {"call": call, "flip": flipResult, "result": ""};
+  var resultOfCall = "lose";
+  if (call == flipResult){
+    resultOfCall = "win";
+  }
+  returnDict["result"] = resultOfCall;
+  return returnDict;
+}
 
+function flipATail(call) {
+  var flipResult = "tails";
+  var returnDict = {"call": call, "flip": flipResult, "result": ""};
+  var resultOfCall = "lose";
+  if (call == flipResult){
+    resultOfCall = "win";
+  }
+  returnDict["result"] = resultOfCall;
+  return returnDict;
+}
 /** Export 
  * 
  * Export all of your named functions
 */
 
-export {coinFlip, coinFlips, countFlips, flipACoin};
+export {coinFlip, coinFlips, countFlips, flipACoin, flipAHead, flipATail};
